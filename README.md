@@ -1,6 +1,9 @@
 # Basic Netflix clone
 <img width="1436" alt="Screenshot 2021-07-20 at 4 40 53 PM" src="https://user-images.githubusercontent.com/35263182/126314477-936b6acd-84d2-4c6b-b45a-c2678fd934b5.png">
 
+## For API Service
+#### I have created a separate repo and hosted it on heroku 'https://github.com/abhinandansharma/netflix-clone-API'
+#### Hosted link - 'https://netflix-clone-api-key.herokuapp.com'
 
 ## Available Scripts
 
