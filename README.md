@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Basic Netflix clone
+<img width="1436" alt="Screenshot 2021-07-20 at 4 40 53 PM" src="https://user-images.githubusercontent.com/35263182/126314477-936b6acd-84d2-4c6b-b45a-c2678fd934b5.png">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
