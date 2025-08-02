@@ -119,10 +119,15 @@
 }
 @media screen and (max-width: 768px) {
   .modal__overview {
-    font-size: 16px;
+    font-size: 14px;
   }
   .modal__details {
     font-size: 16px;
+  }
+  .modal__title {
+    padding: 0;
+    font-size: 30px;
+    margin: 14px 0;
   }
   .wrapper-modal {
     padding: 0;

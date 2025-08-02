@@ -1,63 +1,121 @@
-import React, {useState,useEffect} from 'react'
+import React, { useEffect, useRef, useState } from "react";
 import axios from "../API/axios";
 import "./Row.css";
 import MovieModal from './MovieModal';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-const Row= ({title,fetchUrl,isLargeRow,id})=> {
-    const base_url = "https://image.tmdb.org/t/p/original/";
-    const [movies, setMovies] = useState([])
-    const [modalVisibility,setModalVisibility] = useState(false);
-    const [movieSelected, setMovieSelection] = useState({});
 
-    //A snippet of code which runs based on a specific condition/variable
-    useEffect(()=>{
+const base_url = "https://image.tmdb.org/t/p/original/";
 
-        //if [], run once when the row loads, and dont run again 
+function Row({ title, fetchUrl, isLargeRow = false, id }) {
+    const [movies, setMovies] = useState([]);
+    const [modalVisibility, setModalVisibility] = useState(false);
+    const [movieSelected, setMovieSelection] = useState({})
+    const rowRef = useRef(null);
+    const scrollIntervalRef = useRef(null);
+    const isHoveredRef = useRef(false);
+    const isMobile = window.innerWidth <= 768;
 
-        async function fetchData(){
-            //Dont move until we get the API answer
+    useEffect(() => {
+        const fetchData = async () => {
             const request = await axios.get(fetchUrl);
-            // GET REQUEST  = "https://api.themoviedb.org/3/fetchUrl"
-            setMovies(request.data.results)
+            setMovies(request.data.results);
             return request;
-        }
-
+        };
         fetchData();
-
     }, [fetchUrl]);
 
-    const handleClick = (movie) =>{
+    useEffect(() => {
+        if (!rowRef.current || isMobile) return;
+
+        let direction = 1;
+
+        const startScroll = () => {
+            clearInterval(scrollIntervalRef.current); // prevent multiple intervals
+
+            scrollIntervalRef.current = setInterval(() => {
+                if (!rowRef.current || isHoveredRef.current || modalVisibility) return;
+
+                const el = rowRef.current;
+                const scrollAmount = 1.5;
+                el.scrollLeft += scrollAmount * direction;
+
+                const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
+                const atStart = el.scrollLeft <= 0;
+
+                if (atEnd) direction = -1;
+                else if (atStart) direction = 1;
+            }, 30);
+        };
+
+        startScroll(); // start initially
+
+        return () => clearInterval(scrollIntervalRef.current); // cleanup
+    }, [movies, isMobile]);
+
+    const handleMouseEnter = () => {
+        if (!isMobile) {
+            isHoveredRef.current = true;
+            clearInterval(scrollIntervalRef.current); // stop scrolling on hover
+        }
+    };
+
+    const handleMouseLeave = () => {
+        if (!isMobile) {
+            isHoveredRef.current = false;
+
+            if (modalVisibility) return;
+            // restart auto-scroll
+            const el = rowRef.current;
+            if (el && !scrollIntervalRef.current) {
+                el.scrollLeft += 0.1; // nudge
+            }
+            // restart scroll
+            let direction = 1;
+            scrollIntervalRef.current = setInterval(() => {
+                if (!rowRef.current || isHoveredRef.current) return;
+
+                const scrollAmount = 1.5;
+                el.scrollLeft += scrollAmount * direction;
+
+                const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
+                const atStart = el.scrollLeft <= 0;
+
+                if (atEnd) direction = -1;
+                else if (atStart) direction = 1;
+            }, 30);
+        }
+    };
+
+    const handleClick = (movie) => {
         setModalVisibility(true);
         setMovieSelection(movie);
     }
 
     return (
-        <section className="row">
-            {/** TITLE */}
+        <div className="row" id={id}>
             <h2>{title}</h2>
-            <div className="slider">
-     
-                <div className="slider__arrow-left" ><span className="arrow" onClick={()=>{document.getElementById(id).scrollLeft-=(window.innerWidth-80)}}><ArrowBackIosIcon/></span></div>
-                <div id={id} className="row__posters">
-                    {/**SEVERAL ROW__POSTER */}
-                    {movies.map(movie=>(
-                        <img
-                            key={movie.id}
-                            onClick={() => handleClick(movie)}
-                            className={`row__poster ${isLargeRow && "row__posterLarge"}`} 
-                            src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`} 
-                            loading="lazy"
-                            alt={movie.name}/>
-                    ))}
-                    
-                </div>
-                <div className="slider__arrow-right" ><span className="arrow" onClick={()=>{document.getElementById(id).scrollLeft+=(window.innerWidth-80)}}><ArrowForwardIosIcon/></span></div>
+            <div
+                className="row__posters"
+                ref={rowRef}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+                {movies.map((movie, index) => (
+                    <img
+                        key={movie.id + "-" + index}
+                        className={`row__poster ${isLargeRow && "row__posterLarge"}`}
+                        src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path
+                            }`}
+                        onClick={() => handleClick(movie)}
+                        loading="lazy"
+                        alt={movie.name}
+                        style={{ cursor: "pointer" }}
+                    />
+                ))}
             </div>
-            {modalVisibility && <MovieModal {...movieSelected} setModalVisibility={setModalVisibility}/>}
-        </section>
-    )
+            {modalVisibility && <MovieModal {...movieSelected} setModalVisibility={setModalVisibility} />}
+        </div>
+    );
 }
 
 export default Row;

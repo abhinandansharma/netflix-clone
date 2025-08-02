@@ -1,52 +1,94 @@
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import "./Nav.css";
 
-const Nav= ()=> {
-    const [show, handleShow] = useState(false);
+const sections = ["home", "originals", "trending", "toprated", "action", "comedy", "horror"];
 
-    useEffect(()=>{
-        window.addEventListener("scroll", () =>{
-            if(window.scrollY > 50){
-                handleShow(true);
-            }else{
-                handleShow(false);
+const Nav = () => {
+    const [show, setShow] = useState(false);
+    const [activeSection, setActiveSection] = useState("home");
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setShow(window.scrollY > 50);
+
+            let currentSection = "home";
+            for (let id of sections) {
+                const element = document.getElementById(id);
+                if (element) {
+                    const offsetTop = element.offsetTop - 150;
+                    if (window.scrollY >= offsetTop) {
+                        currentSection = id;
+                    }
+                }
             }
-            
-        });
-        return () => {
-            window.removeEventListener("scroll",()=>{})
+            setActiveSection(currentSection);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const scrollToSection = (id) => {
+        const section = document.getElementById(id);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+            setMenuOpen(false);
         }
-    }, [])
-    
+    };
+
     return (
         <nav className={`nav ${show && "nav__black"}`}>
-            {/* left side of the nav bar */}
-            <img
-                alt="Netflix logo"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/170px-Netflix_2015_logo.svg.png"
-                className="nav__logo"
-            />
-            <div className="nav-container">
-                <h4 id="activeCategory">Home</h4>
-                <h4 className="category">TV Shows</h4>
-                <h4 className="category">Movies</h4>
-                <h4 className="category">Recently Added</h4>
-                <h4 className="category">My List</h4>
+            <div className="nav-left">
+                <img
+                    alt="Netflix logo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/170px-Netflix_2015_logo.svg.png"
+                    className="nav__logo"
+                />
             </div>
-            {/* right side of the nav bar */}
-            <div className="navIcon-container">
-                <SearchIcon className="navIcon"/>
-                <NotificationsIcon className="navIcon"/>
+
+            <div className="nav-right">
+                <div className="nav-container">
+                    {sections.map((id) => (
+                        <span
+                            key={id}
+                            className={`nav-item ${activeSection === id ? "active" : ""}`}
+                            onClick={() => scrollToSection(id)}
+                        >
+                            {id.charAt(0).toUpperCase() + id.slice(1)}
+                        </span>
+                    ))}
+                </div>
+
+                <div className="nav-icons">
+                    <SearchIcon className="nav-icon" />
+                    <NotificationsIcon className="nav-icon" />
+                </div>
+
+                <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
+                    {menuOpen ? <CloseIcon className="nav-icon" /> : <MenuIcon className="nav-icon" />}
+                </div>
             </div>
-            <img
-                alt="User logged"
-                src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
-                className="nav__avatar"
-            />
+
+            {menuOpen && (
+                <div className="mobile-nav">
+                    {sections.map((id) => (
+                        <span
+                            key={id}
+                            className={`nav-item ${activeSection === id ? "active" : ""}`}
+                            onClick={() => scrollToSection(id)}
+                        >
+                            {id.charAt(0).toUpperCase() + id.slice(1)}
+                        </span>
+                    ))}
+                </div>
+            )}
         </nav>
-    )
-}
+    );
+};
 
 export default Nav;

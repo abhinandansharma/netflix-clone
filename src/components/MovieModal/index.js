@@ -76,19 +76,19 @@ const MovieModal = ({
         fetchTrailer();
     }, [title, name]);
 
-    // Handle click outside modal
-    const handleClickOutside = (event) => {
-        if (modalRef.current && !modalRef.current.contains(event.target)) {
-            setModalVisibility(false);
-        }
-    };
 
     useEffect(() => {
+        // Handle click outside modal
+        const handleClickOutside = (event) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                setModalVisibility(false);
+            }
+        };
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, []);
+    }, [setModalVisibility]);
 
 return (
     <div className="presentation">
