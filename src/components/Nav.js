@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
-import SearchIcon from '@material-ui/icons/Search';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import SearchIcon from '@mui/icons-material/Search';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import "./Nav.css";
 
 const Nav= ()=> {

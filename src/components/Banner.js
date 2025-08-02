@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import axios from "../API/axios";
 import requests from "../API/requests";
 import "./Banner.css";
@@ -48,7 +48,7 @@ const Banner= ()=> {
                 <h1 className="banner__title">{movie?.title || movie?.name || movie?.original_name}</h1>
                 <div className="banner__buttons">
                     <button className="banner__button play" onClick={() => handleClick(movie)}><PlayArrowIcon />Play</button>
-                    <button className="banner__button info" onClick={() => handleClick(movie)}><InfoOutlinedIcon fontSize="small"  paddingRight={20} marginRight={100}/><div className="space"></div> More Information</button>
+                    <button className="banner__button info" onClick={() => handleClick(movie)}><InfoOutlinedIcon fontSize="small"/><div className="space"></div> More Information</button>
                     
                 </div>
                 {/**DIV > 2 BUTTONS */}
