@@ -4,9 +4,12 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import axios from "../API/axios";
 import requests from "../API/requests";
 import "./Banner.css";
+import MovieModal from './MovieModal';
 
 const Banner= ()=> {
     const [movie,setMovie] = useState([]);
+    const [modalVisibility, setModalVisibility] = useState(false);
+    const [movieSelected, setMovieSelection] = useState({});
 
     const truncate = (str, n)=> {
         return str?.length > n ? str.substr(0, n - 1) + "..." : str;
@@ -25,6 +28,11 @@ const Banner= ()=> {
         
     },[]);
     
+    const handleClick = (movie) => {
+        setModalVisibility(true);
+        setMovieSelection(movie);
+    }
+
     return (
         <header className="banner"
             style={{
@@ -39,8 +47,8 @@ const Banner= ()=> {
                 {/**Tittle */}
                 <h1 className="banner__title">{movie?.title || movie?.name || movie?.original_name}</h1>
                 <div className="banner__buttons">
-                    <button className="banner__button play"><PlayArrowIcon />Play</button>
-                    <button className="banner__button info"><InfoOutlinedIcon fontSize="small"  paddingRight={20} marginRight={100}/><div className="space"></div> More Information</button>
+                    <button className="banner__button play" onClick={() => handleClick(movie)}><PlayArrowIcon />Play</button>
+                    <button className="banner__button info" onClick={() => handleClick(movie)}><InfoOutlinedIcon fontSize="small"  paddingRight={20} marginRight={100}/><div className="space"></div> More Information</button>
                     
                 </div>
                 {/**DIV > 2 BUTTONS */}
@@ -49,6 +57,7 @@ const Banner= ()=> {
                 {/*Description*/}
             </div>   
             <div className="banner--fadeBottom"/>
+            {modalVisibility && <MovieModal {...movieSelected} setModalVisibility={setModalVisibility} />}
         </header>
     )
 }

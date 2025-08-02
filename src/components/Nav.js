@@ -42,7 +42,7 @@ const Nav= ()=> {
             </div>
             <img
                 alt="User logged"
-                src="https://pbs.twimg.com/profile_images/1240119990411550720/hBEe3tdn_400x400.png"
+                src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
                 className="nav__avatar"
             />
         </nav>

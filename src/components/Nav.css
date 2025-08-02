@@ -35,10 +35,12 @@
 }
 #activeCategory{
     color: white;
+    cursor: pointer;
 }
 .category {
-    color: rgb(223, 223, 223);
+    color: rgb(209, 199, 199);
     padding-left: 20px;
+    cursor: pointer;
 }
 .navIcon-container{
     display: flex;

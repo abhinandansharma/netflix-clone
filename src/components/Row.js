@@ -31,8 +31,8 @@ const Row= ({title,fetchUrl,isLargeRow,id})=> {
     const handleClick = (movie) =>{
         setModalVisibility(true);
         setMovieSelection(movie);
-
     }
+
     return (
         <section className="row">
             {/** TITLE */}
