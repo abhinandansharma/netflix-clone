@@ -50,7 +50,7 @@ function Row({ title, fetchUrl, isLargeRow = false, id }) {
         startScroll(); // start initially
 
         return () => clearInterval(scrollIntervalRef.current); // cleanup
-    }, [movies, isMobile]);
+    }, [movies, isMobile, modalVisibility]);
 
     const handleMouseEnter = () => {
         if (!isMobile) {
