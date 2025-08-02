@@ -27,7 +27,7 @@ const MovieModal = ({backdrop_path,title,overview,name,release_date,first_air_da
                 setTrailerUrl(urlParams.get('v'));
             }).catch(error => console.log(error))
         }
-    }, [])
+    }, [title, name, trailerUrl])
     
     return (
         <div className="presentation" role="presentation">
@@ -36,6 +36,7 @@ const MovieModal = ({backdrop_path,title,overview,name,release_date,first_air_da
                     <span onClick={()=>setModalVisibility(false)}className="modal-close"><CancelIcon/></span>
                     {trailerUrl ? <Youtube videoId={trailerUrl} opts={opts}/> :                     
                         (<img
+                        alt="modal poster"
                         className="modal__poster-img"
                         src={`${base_url}${backdrop_path}`}
                     />)}
