@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* made-by badge */
+.made-by { position: fixed; left: 16px; bottom: 16px; z-index: 950; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.85rem 0.5rem 0.7rem; border-radius: 999px; background: rgba(20,20,20,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.2); font-family: inherit; font-size: 0.8rem; font-weight: 500; line-height: 1; text-decoration: none; letter-spacing: 0; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: background-color 0.15s, color 0.15s, transform 0.15s; }
+.made-by:hover { background: #fff; color: #141414; transform: translateY(-1px); }
+.made-by-dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: #e50914; box-shadow: 0 0 0 3px rgba(224, 32, 42, 0.25); }
+.made-by svg { opacity: 0.7; }
+@media (max-width: 560px) { .made-by { left: 12px; bottom: 12px; font-size: 0.75rem; } }
