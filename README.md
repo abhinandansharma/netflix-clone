@@ -1,6 +1,6 @@
 **Live:** https://abhinandansharma.github.io/netflix-clone/
 
-# 🎬 Showreel (a Netflix-style browser in React)
+# 🎬 Flix (a Netflix-style browser in React)
 
 A responsive, Netflix-inspired movie streaming UI built using ReactJS. This project replicates the core features of the Netflix front-end experience — complete with dynamic movie rows, banner, autoplay scrolling, hover previews, and modals with trailers.
 
