@@ -32,7 +32,7 @@ const Banner= ()=> {
     return (
         <header className="banner"
             style={{
-                backgroundImage : movie?.backdrop_path ? `url("https://image.tmdb.org/t/p/w1280${movie.backdrop_path}")` : "linear-gradient(180deg, #141414, #000)",
+                backgroundImage : movie?.backdrop_path ? `url("https://image.tmdb.org/t/p/${window.innerWidth > 1000 ? "w1280" : "w780"}${movie.backdrop_path}")` : "linear-gradient(180deg, #141414, #000)",
                 backgroundPosition : "top center",
                 backgroundSize: "cover",
             }}

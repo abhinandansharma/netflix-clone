@@ -78,6 +78,8 @@ function Row({ title, fetchKey, isLargeRow = false, id, mediaType = 'movie' }) {
                                 className={`row__poster ${isLargeRow ? "row__posterLarge" : ""}`}
                                 src={`${base_url}${size}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
                                 loading="lazy"
+                                width={isLargeRow ? 342 : 500}
+                                height={isLargeRow ? 513 : 281}
                                 alt=""
                             />
                             <span className="row__caption">
