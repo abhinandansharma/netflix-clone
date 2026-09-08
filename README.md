@@ -2,9 +2,13 @@
 
 # 🎬 Flix (a Netflix-style browser in React)
 
-A responsive, Netflix-inspired movie streaming UI built using ReactJS. This project replicates the core features of the Netflix front-end experience — complete with dynamic movie rows, banner, autoplay scrolling, hover previews, and modals with trailers.
+A responsive, Netflix-style browser built with React and the TMDB API: a featured banner, rows of titles that auto-scroll and pause on hover, captions with title and year on every card, and a modal that plays the trailer.
 
-![Netflix UI Screenshot](https://user-images.githubusercontent.com/35263182/126314477-936b6acd-84d2-4c6b-b45a-c2678fd934b5.png)
+![Flix home](screenshots/home.png)
+
+![Rows with captions](screenshots/rows.png)
+
+![Trailer modal](screenshots/modal.png)
 
 ### 🔗 Live Preview  
 **🌐 [View Live Demo](https://abhinandansharma.github.io/netflix-clone/)**
