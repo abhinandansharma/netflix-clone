@@ -5,7 +5,7 @@ import MovieModal from './MovieModal';
 
 const base_url = "https://image.tmdb.org/t/p/";
 
-function Row({ title, fetchKey, isLargeRow = false, id }) {
+function Row({ title, fetchKey, isLargeRow = false, id, mediaType = 'movie' }) {
     const [movies, setMovies] = useState(null); // null = loading
     const [offline, setOffline] = useState(false);
     const [modalVisibility, setModalVisibility] = useState(false);
@@ -75,7 +75,7 @@ function Row({ title, fetchKey, isLargeRow = false, id }) {
                     />
                 ))}
             </div>
-            {modalVisibility && <MovieModal {...movieSelected} setModalVisibility={setModalVisibility} />}
+            {modalVisibility && <MovieModal {...movieSelected} mediaType={movieSelected.media_type || mediaType} setModalVisibility={setModalVisibility} />}
         </div>
     );
 }

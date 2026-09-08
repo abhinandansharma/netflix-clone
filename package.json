@@ -11,10 +11,8 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^1.6.2",
-    "movie-trailer": "^3.2.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-player": "^2.10.1",
     "react-scripts": "^5.0.1",
     "web-vitals": "^1.1.2"
   },

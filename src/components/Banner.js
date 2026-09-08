@@ -51,7 +51,7 @@ const Banner= ()=> {
                 {/*Description*/}
             </div>   
             <div className="banner--fadeBottom"/>
-            {modalVisibility && <MovieModal {...movieSelected} setModalVisibility={setModalVisibility} />}
+            {modalVisibility && <MovieModal {...movieSelected} mediaType="tv" setModalVisibility={setModalVisibility} />}
         </header>
     )
 }

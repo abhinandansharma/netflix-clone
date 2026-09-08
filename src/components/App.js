@@ -31,6 +31,7 @@ const App = () => {
           title="NETFLIX ORIGINALS"
           id="NO"
           fetchKey="fetchNetflixOriginals"
+          mediaType="tv"
           isLargeRow
         />
       </div>
