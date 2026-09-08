@@ -63,17 +63,30 @@ function Row({ title, fetchKey, isLargeRow = false, id, mediaType = 'movie' }) {
                     <div key={i} className={`row__poster row__poster--skeleton ${isLargeRow ? "row__posterLarge" : ""}`} />
                 ))}
                 {movies && movies.length === 0 && <p className="row__empty">Nothing to show right now.</p>}
-                {movies && movies.map((movie, index) => (
-                    <img
-                        key={movie.id + "-" + index}
-                        className={`row__poster ${isLargeRow ? "row__posterLarge" : ""}`}
-                        src={`${base_url}${size}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
-                        onClick={() => handleClick(movie)}
-                        loading="lazy"
-                        alt={movie.name || movie.title || ""}
-                        style={{ cursor: "pointer" }}
-                    />
-                ))}
+                {movies && movies.map((movie, index) => {
+                    const name = movie.name || movie.title || "";
+                    const year = (movie.release_date || movie.first_air_date || "").slice(0, 4);
+                    return (
+                        <button
+                            key={movie.id + "-" + index}
+                            type="button"
+                            className={`row__card ${isLargeRow ? "row__card--large" : ""}`}
+                            onClick={() => handleClick(movie)}
+                            aria-label={name}
+                        >
+                            <img
+                                className={`row__poster ${isLargeRow ? "row__posterLarge" : ""}`}
+                                src={`${base_url}${size}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
+                                loading="lazy"
+                                alt=""
+                            />
+                            <span className="row__caption">
+                                <span className="row__name">{name}</span>
+                                {year && <span className="row__year">{year}</span>}
+                            </span>
+                        </button>
+                    );
+                })}
             </div>
             {modalVisibility && <MovieModal {...movieSelected} mediaType={movieSelected.media_type || mediaType} setModalVisibility={setModalVisibility} />}
         </div>

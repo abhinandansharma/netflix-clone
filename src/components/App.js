@@ -28,7 +28,7 @@ const App = () => {
 
       <div id="originals" className="fade-in-section">
         <Row
-          title="NETFLIX ORIGINALS"
+          title="Netflix Originals"
           id="NO"
           fetchKey="fetchNetflixOriginals"
           mediaType="tv"
