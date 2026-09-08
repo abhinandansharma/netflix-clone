@@ -137,3 +137,14 @@ h2 {
     max-height: 280px;
   }
 }
+.row__posters { display: flex; overflow-y: hidden; overflow-x: scroll; padding: 20px; scrollbar-width: none; }
+.row__posters::-webkit-scrollbar { display: none; }
+.row__poster { object-fit: contain; width: 100%; max-height: 100px; margin-right: 10px; transition: transform 450ms; border-radius: 4px; }
+.row__poster:hover { transform: scale(1.08); }
+.row__posterLarge { max-height: 250px; }
+.row__posterLarge:hover { transform: scale(1.09); }
+.row__poster--skeleton { width: 178px; min-width: 178px; height: 100px; background: linear-gradient(90deg, #1a1a1a 25%, #262626 37%, #1a1a1a 63%); background-size: 400% 100%; animation: shimmer 1.4s ease infinite; }
+.row__poster--skeleton.row__posterLarge { width: 167px; min-width: 167px; height: 250px; }
+@keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+.row__badge { margin-left: 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #bbb; border: 1px solid #444; border-radius: 999px; padding: 2px 8px; vertical-align: middle; }
+.row__empty { color: #888; padding: 20px; }

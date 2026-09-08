@@ -101,3 +101,8 @@ Let me know if you'd like to add GitHub repo badges or a short walkthrough video
 ## Configuration
 
 Create `.env` from `.env.example` with your TMDB API key. The GitHub Pages build reads it from the `TMDB_API_KEY` repository secret.
+
+
+## Reliability
+
+The app calls `api.tmdb.org` first (an official TMDB alias that stays reachable on networks where `api.themoviedb.org` is blocked) and falls back to the main host. If neither responds, rows render from a small bundled snapshot in `src/API/fallback.json` and show an "offline snapshot" badge.

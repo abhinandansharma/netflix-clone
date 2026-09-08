@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Row from "./Row";
 import Banner from "./Banner";
 import Nav from "./Nav";
-import requests from "../API/requests";
 import './App.css';
 
 const App = () => {
@@ -31,7 +30,7 @@ const App = () => {
         <Row
           title="NETFLIX ORIGINALS"
           id="NO"
-          fetchUrl={requests.fetchNetflixOriginals}
+          fetchKey="fetchNetflixOriginals"
           isLargeRow
         />
       </div>
@@ -40,7 +39,7 @@ const App = () => {
         <Row
           title="Trending Now"
           id="TN"
-          fetchUrl={requests.fetchTrending}
+          fetchKey="fetchTrending"
         />
       </div>
 
@@ -48,7 +47,7 @@ const App = () => {
         <Row
           title="Top Rated"
           id="TR"
-          fetchUrl={requests.fetchTopRated}
+          fetchKey="fetchTopRated"
         />
       </div>
 
@@ -56,7 +55,7 @@ const App = () => {
         <Row
           title="Action Movies"
           id="AM"
-          fetchUrl={requests.fetchActionMovies}
+          fetchKey="fetchActionMovies"
         />
       </div>
 
@@ -64,7 +63,7 @@ const App = () => {
         <Row
           title="Comedy Movies"
           id="CM"
-          fetchUrl={requests.fetchComedyMovies}
+          fetchKey="fetchComedyMovies"
         />
       </div>
 
@@ -72,7 +71,7 @@ const App = () => {
         <Row
           title="Horror Movies"
           id="HM"
-          fetchUrl={requests.fetchHorrorMovies}
+          fetchKey="fetchHorrorMovies"
         />
       </div>
     </div>

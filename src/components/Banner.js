@@ -1,13 +1,12 @@
 import React,{useState,useEffect} from 'react';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import axios from "../API/axios";
-import requests from "../API/requests";
+import { fetchList } from "../API/fetchList";
 import "./Banner.css";
 import MovieModal from './MovieModal';
 
 const Banner= ()=> {
-    const [movie,setMovie] = useState([]);
+    const [movie,setMovie] = useState(null);
     const [modalVisibility, setModalVisibility] = useState(false);
     const [movieSelected, setMovieSelection] = useState({});
 
@@ -16,17 +15,14 @@ const Banner= ()=> {
     }
 
     useEffect(() => {
-        async function fetchData(){
-            const request = await axios.get(requests.fetchNetflixOriginals)
-            //Give to our movie hook one of all the movies randomly
-            setMovie(request.data.results[
-                Math.floor(Math.random() * request.data.results.length)
-            ]);
-            return request;
-        }
-        fetchData();
-        
-    },[]);
+        let cancelled = false;
+        fetchList("fetchNetflixOriginals").then(({ results }) => {
+            if (cancelled) return;
+            const withArt = results.filter((m) => m.backdrop_path);
+            setMovie(withArt[Math.floor(Math.random() * withArt.length)] || null);
+        });
+        return () => { cancelled = true; };
+    }, []);
     
     const handleClick = (movie) => {
         setModalVisibility(true);
@@ -36,7 +32,7 @@ const Banner= ()=> {
     return (
         <header className="banner"
             style={{
-                backgroundImage : movie?.backdrop_path ? `url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")` : "linear-gradient(180deg, #141414, #000)",
+                backgroundImage : movie?.backdrop_path ? `url("https://image.tmdb.org/t/p/w1280${movie.backdrop_path}")` : "linear-gradient(180deg, #141414, #000)",
                 backgroundPosition : "top center",
                 backgroundSize: "cover",
             }}

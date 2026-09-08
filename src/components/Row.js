@@ -1,111 +1,73 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "../API/axios";
+import { fetchList } from "../API/fetchList";
 import "./Row.css";
 import MovieModal from './MovieModal';
 
+const base_url = "https://image.tmdb.org/t/p/";
 
-const base_url = "https://image.tmdb.org/t/p/original/";
-
-function Row({ title, fetchUrl, isLargeRow = false, id }) {
-    const [movies, setMovies] = useState([]);
+function Row({ title, fetchKey, isLargeRow = false, id }) {
+    const [movies, setMovies] = useState(null); // null = loading
+    const [offline, setOffline] = useState(false);
     const [modalVisibility, setModalVisibility] = useState(false);
-    const [movieSelected, setMovieSelection] = useState({})
+    const [movieSelected, setMovieSelection] = useState({});
     const rowRef = useRef(null);
     const scrollIntervalRef = useRef(null);
     const isHoveredRef = useRef(false);
-    const isMobile = window.innerWidth <= 768;
+    const directionRef = useRef(1);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const request = await axios.get(fetchUrl);
-            setMovies(request.data.results);
-            return request;
-        };
-        fetchData();
-    }, [fetchUrl]);
+        let cancelled = false;
+        fetchList(fetchKey).then(({ results, offline }) => {
+            if (cancelled) return;
+            setMovies(results.filter((m) => (isLargeRow ? m.poster_path : m.backdrop_path)));
+            setOffline(offline);
+        });
+        return () => { cancelled = true; };
+    }, [fetchKey, isLargeRow]);
 
+    // Slow auto-scroll that bounces at the ends. Paused while hovered or while the modal is open.
     useEffect(() => {
-        if (!rowRef.current || isMobile) return;
-
-        let direction = 1;
-
-        const startScroll = () => {
-            clearInterval(scrollIntervalRef.current); // prevent multiple intervals
-
-            scrollIntervalRef.current = setInterval(() => {
-                if (!rowRef.current || isHoveredRef.current || modalVisibility) return;
-
-                const el = rowRef.current;
-                const scrollAmount = 1.5;
-                el.scrollLeft += scrollAmount * direction;
-
-                const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
-                const atStart = el.scrollLeft <= 0;
-
-                if (atEnd) direction = -1;
-                else if (atStart) direction = 1;
-            }, 30);
+        const el = rowRef.current;
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        if (!el || isMobile || !movies || movies.length === 0) return;
+        const tick = () => {
+            if (isHoveredRef.current || modalVisibility) return;
+            el.scrollLeft += 1.5 * directionRef.current;
+            if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1) directionRef.current = -1;
+            else if (el.scrollLeft <= 0) directionRef.current = 1;
         };
-
-        startScroll(); // start initially
-
-        return () => clearInterval(scrollIntervalRef.current); // cleanup
-    }, [movies, isMobile, modalVisibility]);
-
-    const handleMouseEnter = () => {
-        if (!isMobile) {
-            isHoveredRef.current = true;
-            clearInterval(scrollIntervalRef.current); // stop scrolling on hover
-        }
-    };
-
-    const handleMouseLeave = () => {
-        if (!isMobile) {
-            isHoveredRef.current = false;
-
-            if (modalVisibility) return;
-            // restart auto-scroll
-            const el = rowRef.current;
-            if (el && !scrollIntervalRef.current) {
-                el.scrollLeft += 0.1; // nudge
-            }
-            // restart scroll
-            let direction = 1;
-            scrollIntervalRef.current = setInterval(() => {
-                if (!rowRef.current || isHoveredRef.current) return;
-
-                const scrollAmount = 1.5;
-                el.scrollLeft += scrollAmount * direction;
-
-                const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
-                const atStart = el.scrollLeft <= 0;
-
-                if (atEnd) direction = -1;
-                else if (atStart) direction = 1;
-            }, 30);
-        }
-    };
+        scrollIntervalRef.current = setInterval(tick, 30);
+        return () => clearInterval(scrollIntervalRef.current);
+    }, [movies, modalVisibility]);
 
     const handleClick = (movie) => {
         setModalVisibility(true);
         setMovieSelection(movie);
-    }
+    };
+
+    const size = isLargeRow ? "w342" : "w500";
 
     return (
         <div className="row" id={id}>
-            <h2>{title}</h2>
+            <h2>
+                {title}
+                {offline && <span className="row__badge" title="TMDB could not be reached; showing a saved snapshot">offline snapshot</span>}
+            </h2>
             <div
                 className="row__posters"
                 ref={rowRef}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
+                onMouseEnter={() => { isHoveredRef.current = true; }}
+                onMouseLeave={() => { isHoveredRef.current = false; }}
             >
-                {movies.map((movie, index) => (
+                {movies === null && Array.from({ length: 8 }, (_, i) => (
+                    <div key={i} className={`row__poster row__poster--skeleton ${isLargeRow ? "row__posterLarge" : ""}`} />
+                ))}
+                {movies && movies.length === 0 && <p className="row__empty">Nothing to show right now.</p>}
+                {movies && movies.map((movie, index) => (
                     <img
                         key={movie.id + "-" + index}
-                        className={`row__poster ${isLargeRow && "row__posterLarge"}`}
-                        src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path
-                            }`}
+                        className={`row__poster ${isLargeRow ? "row__posterLarge" : ""}`}
+                        src={`${base_url}${size}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
                         onClick={() => handleClick(movie)}
                         loading="lazy"
                         alt={movie.name || movie.title || ""}
