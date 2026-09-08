@@ -12,11 +12,20 @@
   align-items: center;
 }
 
+.backdrop {
+  position: absolute;
+  inset: 0;
+}
+
 .wrapper-modal {
   position: relative;
+  z-index: 1;
   max-width: 800px;
   width: 90%;
-  margin: 2rem;
+  max-height: calc(100vh - 3rem);
+  margin: 1.5rem;
+  display: flex;
+  flex-direction: column;
   background-color: #111;
   border-radius: 8px;
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
@@ -29,16 +38,20 @@
 .modal {
   position: relative;
   width: 100%;
-  height: 100%;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .modal__video-container {
   position: relative;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio */
   width: 100%;
   background: #000;
+}
+
+.modal__video-container {
+  flex: 0 0 auto;
 }
 
 .modal__video-container iframe,
@@ -108,15 +121,6 @@
   border-radius: 50%;
   padding: 5px;
 }
-@media screen and (max-height: 768px) {
-  .wrapper-modal {
-    align-items: unset;
-    padding-top: 2rem;
-  }
-  .modal {
-    overflow-y: scroll;
-  }
-}
 @media screen and (max-width: 768px) {
   .modal__overview {
     font-size: 14px;
@@ -130,10 +134,12 @@
     margin: 14px 0;
   }
   .wrapper-modal {
-    padding: 0;
+    width: 100%;
+    margin: 0.75rem;
+    max-height: calc(100vh - 1.5rem);
   }
-  .modal {
-    overflow-y: scroll !important;
+  .modal__content {
+    padding: 24px;
   }
 }
 @keyframes fadeIn {

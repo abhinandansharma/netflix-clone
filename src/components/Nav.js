@@ -45,7 +45,7 @@ const Nav = () => {
         <nav className={`nav ${show && "nav__black"}`}>
             <div className="nav-left">
                 <img
-                    alt="Netflix logo"
+                    alt="Reelhouse"
                     src={`${process.env.PUBLIC_URL}/netflix-logo.svg`}
                     className="nav__logo"
                 />

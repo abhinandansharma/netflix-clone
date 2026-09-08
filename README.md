@@ -1,13 +1,13 @@
 **Live:** https://abhinandansharma.github.io/netflix-clone/
 
-# 🎬 Netflix Clone (ReactJS)
+# 🎬 Reelhouse (a Netflix-style browser in React)
 
 A responsive, Netflix-inspired movie streaming UI built using ReactJS. This project replicates the core features of the Netflix front-end experience — complete with dynamic movie rows, banner, autoplay scrolling, hover previews, and modals with trailers.
 
 ![Netflix UI Screenshot](https://user-images.githubusercontent.com/35263182/126314477-936b6acd-84d2-4c6b-b45a-c2678fd934b5.png)
 
 ### 🔗 Live Preview  
-**🌐 [View Live Demo](https://netflix-clone-ten-woad.vercel.app/)**
+**🌐 [View Live Demo](https://abhinandansharma.github.io/netflix-clone/)**
 
 ---
 
@@ -23,14 +23,9 @@ A responsive, Netflix-inspired movie streaming UI built using ReactJS. This proj
 
 ---
 
-## 🌐 API Service
+## 🌐 Data
 
-To avoid exposing TMDB keys, this app uses a custom proxy API:
-
-- GitHub Repo: [netflix-clone-API](https://github.com/abhinandansharma/netflix-clone-API)
-- Hosted on: https://netflix-clone-api-key.herokuapp.com
-
-This proxy securely communicates with TMDB and returns movie data used in the front-end.
+Data comes straight from the [TMDB API](https://developer.themoviedb.org/). The key is injected at build time from the `TMDB_API_KEY` repository secret (see `.env.example` for local development), and a bundled snapshot in `src/API/fallback.json` keeps the UI working if the API is unreachable.
 
 ---
 
