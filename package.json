@@ -44,5 +44,6 @@
   },
   "devDependencies": {
     "jest-axe": "^4.1.0"
-  }
+  },
+  "homepage": "https://abhinandansharma.github.io/netflix-clone"
 }

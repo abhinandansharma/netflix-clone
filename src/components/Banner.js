@@ -20,7 +20,7 @@ const Banner= ()=> {
             const request = await axios.get(requests.fetchNetflixOriginals)
             //Give to our movie hook one of all the movies randomly
             setMovie(request.data.results[
-                Math.floor(Math.random() * request.data.results.length -1)
+                Math.floor(Math.random() * request.data.results.length)
             ]);
             return request;
         }
@@ -36,9 +36,7 @@ const Banner= ()=> {
     return (
         <header className="banner"
             style={{
-                backgroundImage : `url(
-                    "https://image.tmdb.org/t/p/original/${movie?.backdrop_path}"
-                    )`,
+                backgroundImage : movie?.backdrop_path ? `url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")` : "linear-gradient(180deg, #141414, #000)",
                 backgroundPosition : "top center",
                 backgroundSize: "cover",
             }}

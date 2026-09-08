@@ -108,7 +108,7 @@ function Row({ title, fetchUrl, isLargeRow = false, id }) {
                             }`}
                         onClick={() => handleClick(movie)}
                         loading="lazy"
-                        alt={movie.name}
+                        alt={movie.name || movie.title || ""}
                         style={{ cursor: "pointer" }}
                     />
                 ))}

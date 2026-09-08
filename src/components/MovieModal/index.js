@@ -3,9 +3,9 @@ import ReactPlayer from "react-player";
 import movieTrailer from "movie-trailer";
 import CancelIcon from '@mui/icons-material/Cancel';
 import axios from '../../API/axios';
+import { API_KEY } from '../../API/requests';
 import './MovieModal.css';
 
-const API_KEY = "896c8566fc255f7c52f6ea6bd2901188";
 
 const MovieModal = ({
     backdrop_path,

@@ -1,3 +1,5 @@
+**Live:** https://abhinandansharma.github.io/netflix-clone/
+
 # 🎬 Netflix Clone (ReactJS)
 
 A responsive, Netflix-inspired movie streaming UI built using ReactJS. This project replicates the core features of the Netflix front-end experience — complete with dynamic movie rows, banner, autoplay scrolling, hover previews, and modals with trailers.
@@ -95,3 +97,7 @@ This project is open-source under the MIT license.
 ### Built with ❤️ by Abhinandan Sharma
 
 Let me know if you'd like to add GitHub repo badges or a short walkthrough video/gif preview.
+
+## Configuration
+
+Create `.env` from `.env.example` with your TMDB API key. The GitHub Pages build reads it from the `TMDB_API_KEY` repository secret.
