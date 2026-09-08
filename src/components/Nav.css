@@ -96,3 +96,5 @@
         z-index: 1001;
     }
 }
+.nav__brand { font-family: Impact, "Arial Narrow Bold", "Helvetica Neue", Arial, sans-serif; font-weight: 900; font-size: 30px; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; color: #e50914; text-decoration: none; text-shadow: 0 1px 0 rgba(0,0,0,0.4); }
+@media (max-width: 768px) { .nav__brand { font-size: 24px; } }
