@@ -44,7 +44,7 @@ const Nav = () => {
     return (
         <nav className={`nav ${show && "nav__black"}`}>
             <div className="nav-left">
-                <a className="nav__brand" href="#home" onClick={(e) => { e.preventDefault(); scrollToSection("home"); }}>Marquee</a>
+                <a className="nav__brand" href="#home" onClick={(e) => { e.preventDefault(); scrollToSection("home"); }}>Showreel</a>
             </div>
 
             <div className="nav-right">
